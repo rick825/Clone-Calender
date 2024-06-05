@@ -21,7 +21,7 @@ export const DashboardProvider = ({ children }) => {
       const days = eachDayOfInterval({ start, end });
       setDates(days);
 
-      const response = await axios.get('/weeklyData.json'); 
+      const response = await axios.get('./weeklyData.json'); 
       setWeeklyData(response.data);
     } catch (error) {
       console.error("Error loading weekly data:", error);
