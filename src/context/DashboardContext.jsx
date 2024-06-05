@@ -10,6 +10,18 @@ export const DashboardProvider = ({ children }) => {
   const [dates, setDates] = useState([]);
   const [weeklyData, setWeeklyData] = useState([]);
 
+  const handlePrevWeek = () => {
+    setStartDate(subWeeks(startDate, 1));
+  };
+
+  const handleNextWeek = () => {
+    setStartDate(addWeeks(startDate, 1));
+  };
+
+  const handleTimezoneChange = (e) => {
+    setTimezone(e.target.value);
+  };
+
   useEffect(() => {
     loadWeeklyData();
   }, [startDate, timezone]);
@@ -28,17 +40,6 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
-  const handlePrevWeek = () => {
-    setStartDate(subWeeks(startDate, 1));
-  };
-
-  const handleNextWeek = () => {
-    setStartDate(addWeeks(startDate, 1));
-  };
-
-  const handleTimezoneChange = (e) => {
-    setTimezone(e.target.value);
-  };
 
   return (
     <DashboardContext.Provider

@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Clone-Calender/static/css/main.e6d21a31.css",
-    "main.js": "/Clone-Calender/static/js/main.aaf7d72d.js",
+    "main.js": "/Clone-Calender/static/js/main.e94f843e.js",
     "index.html": "/Clone-Calender/index.html",
     "main.e6d21a31.css.map": "/Clone-Calender/static/css/main.e6d21a31.css.map",
-    "main.aaf7d72d.js.map": "/Clone-Calender/static/js/main.aaf7d72d.js.map"
+    "main.e94f843e.js.map": "/Clone-Calender/static/js/main.e94f843e.js.map"
   },
   "entrypoints": [
     "static/css/main.e6d21a31.css",
-    "static/js/main.aaf7d72d.js"
+    "static/js/main.e94f843e.js"
   ]
 }
