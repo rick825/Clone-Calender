@@ -1,6 +1,7 @@
 {
   "name": "calender",
   "version": "0.1.0",
+  "homepage": "https://rick825.github.io/Clone-Calender/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
