@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
-import { format, setHours, setMinutes } from 'date-fns';
+import { format, setHours, setMinutes, isBefore, startOfDay } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 
 const Dashmain = () => {
   const { dates, weeklyData, timezone } = useContext(DashboardContext);
   const [checkedTimes, setCheckedTimes] = useState({});
 
-
-  useEffect(() => {
+//initial checked times
+useEffect(() => {
     const initialCheckedTimes = {};
     weeklyData.forEach(data => {
       const dateStr = format(new Date(data.Date), "yyyy-MM-dd");
@@ -48,6 +48,11 @@ const handleCheckboxChange = (date, time) => {
     });
   };
 
+  //is past date
+  const isPastDate = (date) => {
+    return isBefore(startOfDay(date), startOfDay(new Date()));
+  };
+
   return (
     <div className="dashmain">
       <div className="days-container">
@@ -58,24 +63,27 @@ const handleCheckboxChange = (date, time) => {
               <p>{format(date, "MM/dd")}</p>
             </div>
             <div className="time-slots">
-              {[...Array(16 * 2).keys()].map((i) => {
-                const hours = 8 + Math.floor(i / 2);
-                const minutes = i % 2 === 0 ? '00' : '30';
-                const time = `${String(hours).padStart(2, '0')}:${minutes}`;
-                const dateStr = format(date, "yyyy-MM-dd");
-                const isChecked = checkedTimes[dateStr]?.has(time);
-                const zonedTime = formatInTimeZone(setMinutes(setHours(date, hours), minutes), timezone, 'HH:mm');
+            {isPastDate(date) ? (
+                <p>Past</p>
+              ) : (
+                [...Array(16 * 2).keys()].map((i) => {
+                  const hours = 8 + Math.floor(i / 2);
+                  const minutes = i % 2 === 0 ? '00' : '30';
+                  const time = `${String(hours).padStart(2, '0')}:${minutes}`;
+                  const dateStr = format(date, "yyyy-MM-dd");
+                  const isChecked = checkedTimes[dateStr]?.has(time);
+                  const zonedTime = formatInTimeZone(setMinutes(setHours(date, hours), minutes), timezone, 'HH:mm');
 
-                return (
-                  <div key={time} className="time-slot">
-                    <label>
-                      <input type="checkbox" checked={isChecked || false} onChange={() => handleCheckboxChange(date, time)} value={getDisplayTime(time)}
-                      />
-                      {zonedTime}
-                    </label>
-                  </div>
-                );
-              })}
+                  return (
+                    <div key={time} className="time-slot">
+                      <label>
+                        <input type="checkbox" checked={isChecked || false} onChange={() => handleCheckboxChange(date, time)} value={getDisplayTime(time)} />
+                        {zonedTime}
+                      </label>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         ))}
